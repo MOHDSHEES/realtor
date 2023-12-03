@@ -5,8 +5,9 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
 
 import Layout from "../components/Layout";
+import { MyProvider } from "../components/context";
 
-function MyApp({ Component, pageProps, session }) {
+function MyApp({ Component, pageProps, initialData, session }) {
   NProgress.configure({ showSpinner: false });
 
   Router.events.on("routeChangeStart", () => {
@@ -29,11 +30,13 @@ function MyApp({ Component, pageProps, session }) {
         />
       </Head>
       <SessionProvider session={session}>
-        <ChakraProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ChakraProvider>
+        <MyProvider initialData={initialData}>
+          <ChakraProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ChakraProvider>
+        </MyProvider>
       </SessionProvider>
     </>
   );

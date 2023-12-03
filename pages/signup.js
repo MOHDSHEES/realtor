@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,21 +10,18 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
 import axios from "axios";
 import { closeMessage, openMessage } from "../components/functions/message";
-import { message } from "antd";
+// import { message } from "antd";
 import { useRouter } from "next/navigation";
+import { MyContext } from "../components/context";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const [open, setOpen] = useState(false);
-  const [error, setError] = useState("");
+  const { messageApi } = useContext(MyContext);
   const [disabled, setDisabled] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
+  // const [messageApi, contextHolder] = message.useMessage();
   let dat = {
     email: "",
     firstName: "",
@@ -47,12 +42,10 @@ export default function SignUp() {
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email)) {
       if (state.password === confirmPass) {
         if (state.mobileNo.length !== 10) {
-          setOpen(true);
-          setError("Please Enter 10 digit mobile No.");
+          closeMessage(messageApi, "Please Enter 10 digit mobile No.", "error");
         } else {
           // register
           setDisabled(true);
-          setOpen(false);
           openMessage(messageApi, "Registering User, Please wait...");
           const { data } = await axios.post("/api/register", {
             details: state,
@@ -68,21 +61,17 @@ export default function SignUp() {
         }
       } else {
         // error
-        setOpen(true);
-        setError("Password Mismatch");
+        closeMessage(messageApi, "Password Mismatch", "error");
       }
     } else {
       // error
-      setOpen(true);
-      setError("Enter Valid email Address.");
+      closeMessage(messageApi, "Enter Valid email Address.", "error");
     }
   };
 
   const [confirmPass, setConfirmPass] = useState("");
 
   const Inputchange = (event) => {
-    setOpen(false);
-    setError("");
     const { name, value } = event.target;
     if (name === "mobileNo") {
       if (value.length <= 10) {
@@ -111,7 +100,6 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      {contextHolder}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -131,11 +119,6 @@ export default function SignUp() {
           </Typography>
 
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Collapse in={open}>
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {error}
-              </Alert>
-            </Collapse>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField

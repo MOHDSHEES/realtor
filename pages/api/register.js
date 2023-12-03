@@ -15,7 +15,6 @@ export default async function userAPI(req, res) {
       res.json({ status: 500, msg: "Something went wrong try again later." });
     // res.json(user);
   } catch (error) {
-    console.log(error);
     if (error.code === 11000) {
       res.json({ status: 11000, msg: "Already Registered." });
     } else {
