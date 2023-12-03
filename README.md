@@ -15,7 +15,7 @@ Click [HERE](https://realtor-mohdshees.vercel.app/) to visit the live version of
 ## Installation Steps
 
 **1. First clone the project by running** <br />
-`git clone https://github.com/Exclusiveideas/Realtor.git`
+`git clone https://github.com/MOHDSHEES/realtor`
 <br />
 
 **2. Go into the project directory** <br />
@@ -26,8 +26,13 @@ Click [HERE](https://realtor-mohdshees.vercel.app/) to visit the live version of
 `npm i`
 <br />
 
-**4. Start the application development server**<br />
-`npm start`
+**4. Create Environment variables** <br />
+`create '.env' file`
+`create 'MONGODB_URL NEXTAUTH_SECRET RAPID_API_KEY' variables.`
+<br />
+
+**5. Start the application development server**<br />
+`npm run dev`
 
 <br />
 
