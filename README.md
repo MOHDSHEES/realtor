@@ -28,6 +28,9 @@ Click [HERE](https://realtor-mohdshees.vercel.app/) to visit the live version of
 
 **4. Create Environment variables** <br />
 `create '.env' file`
+<br/>
+`register on Rapid api key and enable Bayut Api.`
+<br/>
 `create 'MONGODB_URL NEXTAUTH_SECRET RAPID_API_KEY' variables.`
 <br />
 
